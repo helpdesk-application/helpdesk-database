@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const SLA = require("../models/SLA");
-const SLATracking = require("../models/SLATracking");
+const SLA = require("../../models/05-sla/SLA");
+const SLATracking = require("../../models/05-sla/SLATracking");
 
 // POST /api/sla/tracking
 router.post("/tracking", async (req, res) => {

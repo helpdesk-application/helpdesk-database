@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
+const User = require("../../models/02-users/User");
 
 // Get all users
 router.get("/", async (req, res) => {
@@ -90,13 +90,14 @@ router.post("/", async (req, res) => {
 // Update user details
 router.patch("/:id", async (req, res) => {
     try {
-        const { email, role, department } = req.body;
+        const { email, role, department, password } = req.body;
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ message: "User not found" });
 
         if (email) user.email = email;
         if (role) user.role = role;
         if (department) user.department = department;
+        if (password) user.password = password;
 
         await user.save();
         res.json({ message: "User updated", user });

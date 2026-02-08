@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Attachment = require("../models/Attachment");
+const Attachment = require("../../models/04-attachments/Attachment");
 
 // Create attachment
 router.post("/", async (req, res) => {

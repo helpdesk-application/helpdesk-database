@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Notification = require("../models/Notification");
+const Notification = require("../../models/06-notifications/Notification");
 
 // Get notifications for a user
 router.get("/user/:userId", async (req, res) => {
@@ -17,8 +17,8 @@ router.get("/user/:userId", async (req, res) => {
 // Create a notification
 router.post("/", async (req, res) => {
     try {
-        const { user_id, message } = req.body;
-        const notification = new Notification({ user_id, message });
+        const { user_id, message, ticket_id } = req.body;
+        const notification = new Notification({ user_id, message, ticket_id });
         await notification.save();
         res.status(201).json(notification);
     } catch (err) {

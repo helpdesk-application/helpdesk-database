@@ -40,35 +40,36 @@ app.get("/", (req, res) => {
 });
 
 // reports route
-const reportsRoute = require("./routes/reports");
+const reportsRoute = require("./routes/08-reports/reports");
 app.use("/api/reports", reportsRoute);
 
 // tickets route
-const ticketsRoute = require("./routes/tickets");
+const ticketsRoute = require("./routes/03-tickets/tickets");
 app.use("/api/tickets", ticketsRoute);
 
 // users route
-const usersRoute = require("./routes/users");
+const usersRoute = require("./routes/02-users/users");
 app.use("/api/users", usersRoute);
+app.use("/api/users/activities", require("./routes/02-users/activities"));
 
 // knowledge route
-const knowledgeRoute = require("./routes/knowledge");
+const knowledgeRoute = require("./routes/07-kb/knowledge");
 app.use("/api/knowledge", knowledgeRoute);
 
 // replies route
-const repliesRoute = require("./routes/replies");
+const repliesRoute = require("./routes/03-tickets/replies");
 app.use("/api/replies", repliesRoute);
 
 // notifications route
-const notificationsRoute = require("./routes/notifications");
+const notificationsRoute = require("./routes/06-notifications/notifications");
 app.use("/api/notifications", notificationsRoute);
 
 // sla route
-const slaRoute = require("./routes/sla");
+const slaRoute = require("./routes/05-sla/sla");
 app.use("/api/sla", slaRoute);
 
 // attachments route
-const attachmentRoute = require("./routes/attachments");
+const attachmentRoute = require("./routes/04-attachments/attachments");
 app.use("/api/attachments", attachmentRoute);
 
 // start server (ALWAYS LAST)

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const TicketReply = require("../models/TicketReply");
+const TicketReply = require("../../models/03-tickets/TicketReply");
 
 // Get all replies for a specific ticket
 router.get("/ticket/:ticketId", async (req, res) => {
