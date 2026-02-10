@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Ticket = require("../../models/03-tickets/Ticket");
+const TicketHistory = require("../../models/03-tickets/TicketHistory");
 const mongoose = require("mongoose");
 
 // Create a ticket
@@ -22,6 +23,17 @@ router.post("/", async (req, res) => {
     }
     const ticket = new Ticket(ticketData);
     await ticket.save();
+
+    // Log Creation History
+    const history = new TicketHistory({
+      ticket_id: ticket._id,
+      user_id: customer_id,
+      user_name: req.body.user_name || 'Customer',
+      action: 'TICKET_CREATED',
+      description: 'Ticket opened by user'
+    });
+    await history.save();
+
     res.status(201).json({ message: "Ticket created", ticket });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -69,7 +81,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-const TicketHistory = require("../../models/03-tickets/TicketHistory");
 
 // Update ticket
 router.patch("/:id", async (req, res) => {

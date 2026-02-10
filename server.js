@@ -41,39 +41,39 @@ app.get("/", (req, res) => {
 
 // reports route
 const reportsRoute = require("./routes/08-reports/reports");
-app.use("/api/reports", reportsRoute);
+app.use("/reports", reportsRoute);
 
 // tickets route
 const ticketsRoute = require("./routes/03-tickets/tickets");
-app.use("/api/tickets", ticketsRoute);
+app.use("/tickets", ticketsRoute);
 
 // users route
 const usersRoute = require("./routes/02-users/users");
-app.use("/api/users", usersRoute);
-app.use("/api/users/activities", require("./routes/02-users/activities"));
+app.use("/users", usersRoute);
+app.use("/users/activities", require("./routes/02-users/activities"));
 
 // knowledge route
 const knowledgeRoute = require("./routes/07-kb/knowledge");
-app.use("/api/knowledge", knowledgeRoute);
+app.use("/knowledge", knowledgeRoute);
 
 // replies route
 const repliesRoute = require("./routes/03-tickets/replies");
-app.use("/api/replies", repliesRoute);
+app.use("/replies", repliesRoute);
 
 // notifications route
 const notificationsRoute = require("./routes/06-notifications/notifications");
-app.use("/api/notifications", notificationsRoute);
+app.use("/notifications", notificationsRoute);
 
 // sla route
 const slaRoute = require("./routes/05-sla/sla");
-app.use("/api/sla", slaRoute);
+app.use("/sla", slaRoute);
 
 // attachments route
 const attachmentRoute = require("./routes/04-attachments/attachments");
-app.use("/api/attachments", attachmentRoute);
+app.use("/attachments", attachmentRoute);
 
 // start server (ALWAYS LAST)
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });

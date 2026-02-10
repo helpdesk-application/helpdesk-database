@@ -31,8 +31,12 @@ router.get("/tickets-by-agent", async (req, res) => {
 // 🔹 Resolved tickets by agent (Performance)
 router.get("/tickets-by-agent-resolved", async (req, res) => {
   try {
+    const { department } = req.query;
+    const match = { status: { $in: ["RESOLVED", "CLOSED"] } };
+    if (department) match.department = department;
+
     const result = await Ticket.aggregate([
-      { $match: { status: { $in: ["RESOLVED", "CLOSED"] } } },
+      { $match: match },
       { $group: { _id: "$assigned_agent_id", count: { $sum: 1 } } },
       { $lookup: { from: "users", localField: "_id", foreignField: "_id", as: "agent" } },
       { $unwind: "$agent" },
@@ -57,22 +61,28 @@ router.get("/sla-breaches", async (req, res) => {
 // 🔹 Dashboard Summary
 router.get("/dashboard-summary", async (req, res) => {
   try {
-    const totalTickets = await Ticket.countDocuments();
-    const openTickets = await Ticket.countDocuments({ status: "OPEN" });
-    const resolvedTickets = await Ticket.countDocuments({ status: "RESOLVED" });
-    const closedTickets = await Ticket.countDocuments({ status: "CLOSED" });
+    const { department } = req.query;
+    const filter = department ? { department } : {};
+
+    const totalTickets = await Ticket.countDocuments(filter);
+    const openTickets = await Ticket.countDocuments({ ...filter, status: "OPEN" });
+    const resolvedTickets = await Ticket.countDocuments({ ...filter, status: "RESOLVED" });
+    const closedTickets = await Ticket.countDocuments({ ...filter, status: "CLOSED" });
 
     // 🔹 Breakdown Aggregations
     const ticketsByStatus = await Ticket.aggregate([
+      { $match: filter },
       { $group: { _id: "$status", count: { $sum: 1 } } }
     ]);
 
     const ticketsByPriority = await Ticket.aggregate([
+      { $match: filter },
       { $group: { _id: "$priority", count: { $sum: 1 } } }
     ]);
 
+    const avgResMatch = { ...filter, status: { $in: ["RESOLVED", "CLOSED"] } };
     const avgResolutionRes = await Ticket.aggregate([
-      { $match: { status: { $in: ["RESOLVED", "CLOSED"] } } },
+      { $match: avgResMatch },
       {
         $project: {
           resolutionTime: {
@@ -87,6 +97,16 @@ router.get("/dashboard-summary", async (req, res) => {
     ]);
 
     const slaComplianceRes = await SLATracking.aggregate([
+      {
+        $lookup: {
+          from: "tickets",
+          localField: "ticket_id",
+          foreignField: "_id",
+          as: "ticket"
+        }
+      },
+      { $unwind: "$ticket" },
+      { $match: department ? { "ticket.department": department } : {} },
       {
         $group: {
           _id: null,

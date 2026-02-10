@@ -8,7 +8,10 @@ const ticketHistorySchema = new mongoose.Schema({
     field: String,
     old_value: mongoose.Schema.Types.Mixed,
     new_value: mongoose.Schema.Types.Mixed,
+    description: String,
     created_at: { type: Date, default: Date.now }
 });
+
+ticketHistorySchema.index({ ticket_id: 1 });
 
 module.exports = mongoose.model('TicketHistory', ticketHistorySchema);

@@ -3,6 +3,16 @@ const router = express.Router();
 const SLA = require("../../models/05-sla/SLA");
 const SLATracking = require("../../models/05-sla/SLATracking");
 
+// GET /api/sla
+router.get("/", async (req, res) => {
+    try {
+        const policies = await SLA.find();
+        res.json(policies);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // POST /api/sla/tracking
 router.post("/tracking", async (req, res) => {
     try {

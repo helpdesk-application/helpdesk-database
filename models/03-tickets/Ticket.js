@@ -24,4 +24,8 @@ const ticketSchema = new mongoose.Schema({
   sentiment: { type: String, default: 'Neutral' },
 });
 
+ticketSchema.index({ customer_id: 1 });
+ticketSchema.index({ assigned_agent_id: 1 });
+ticketSchema.index({ status: 1 });
+
 module.exports = mongoose.model("Ticket", ticketSchema);
