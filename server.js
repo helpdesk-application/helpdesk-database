@@ -14,22 +14,9 @@ app.use(express.json());
 app.use((req, res, next) => {
   const start = Date.now();
   const { method, url } = req;
-  const reqBody = req.body;
-  let responseBody;
-  const oldSend = res.send;
-  res.send = function (body) {
-    responseBody = body;
-    return oldSend.apply(this, arguments);
-  };
   res.on('finish', () => {
     const duration = Date.now() - start;
-    console.log(`[DB-SERVICE] ${new Date().toISOString()} ${method} ${url} -> ${res.statusCode} ${duration}ms`);
-    if (reqBody && Object.keys(reqBody).length) console.log(`[DB-SERVICE] Request body: ${JSON.stringify(reqBody)}`);
-    try {
-      if (responseBody) console.log(`[DB-SERVICE] Response body: ${typeof responseBody === 'string' ? responseBody : JSON.stringify(responseBody)}`);
-    } catch (e) {
-      console.log('[DB-SERVICE] Response body: [unserializable]');
-    }
+    console.log(`[DB-SERVICE] ${method} ${url} -> ${res.statusCode} ${duration}ms`);
   });
   next();
 });
