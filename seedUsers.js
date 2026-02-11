@@ -26,6 +26,34 @@ const users = [
         department: 'IT Support'
     },
     {
+        name: 'Finance Agent',
+        email: 'finance_agent@helpdesk.com',
+        password: 'finance123',
+        role: 'Agent',
+        department: 'Finance'
+    },
+    {
+        name: 'Finance Manager',
+        email: 'finance_manager@helpdesk.com',
+        password: 'finance123',
+        role: 'Manager',
+        department: 'Finance'
+    },
+    {
+        name: 'Security Agent',
+        email: 'security_agent@helpdesk.com',
+        password: 'security123',
+        role: 'Agent',
+        department: 'Security'
+    },
+    {
+        name: 'Security Manager',
+        email: 'security_manager@helpdesk.com',
+        password: 'security123',
+        role: 'Manager',
+        department: 'Security'
+    },
+    {
         name: 'Customer User',
         email: 'customer@helpdesk.com',
         password: 'customer123',

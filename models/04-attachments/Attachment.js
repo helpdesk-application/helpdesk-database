@@ -7,7 +7,7 @@ const attachmentSchema = new mongoose.Schema({
   original_name: { type: String, required: true },
   mime_type: { type: String, required: true },
   size: { type: Number, required: true },
-  path: { type: String, required: true }, // Local path or Cloud URL
+  content: { type: Buffer, required: true }, // Store file binary in DB
   created_at: { type: Date, default: Date.now },
 });
 
