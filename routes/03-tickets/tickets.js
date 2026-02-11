@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
       priority: priority || "MEDIUM",
       status: "OPEN",
       category: category || "General",
+      department: req.body.department || "General",
       sentiment: sentiment || "Neutral"
     };
     // Only add customer_id if it's a valid ObjectId
@@ -112,6 +113,7 @@ router.patch("/:id", async (req, res) => {
     if (priority) checkAndLog('priority', priority);
     if (status) checkAndLog('status', status);
     if (assigned_agent_id) checkAndLog('assigned_agent_id', assigned_agent_id);
+    if (req.body.department) checkAndLog('department', req.body.department);
 
     if (req.body.happiness_rating !== undefined) updateData.happiness_rating = req.body.happiness_rating;
     if (req.body.customer_feedback !== undefined) updateData.customer_feedback = req.body.customer_feedback;
