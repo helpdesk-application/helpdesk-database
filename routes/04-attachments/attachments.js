@@ -33,6 +33,7 @@ router.get("/ticket/:id", async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 // Download attachment by filename (Returns binary)
 router.get("/filename/:filename/download", async (req, res) => {
     try {
@@ -50,6 +51,8 @@ router.get("/filename/:filename/download", async (req, res) => {
     }
 });
 
+=======
+>>>>>>> 111453fecb43ccc8fd926c7444d5545796875210
 // Download attachment (Returns binary)
 router.get("/:id/download", async (req, res) => {
     try {
