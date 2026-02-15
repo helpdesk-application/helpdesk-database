@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
-  const PORT = process.env.PORT || 5000;
-  let uri = process.env.MONGO_URI || `mongodb://localhost:${PORT}/helpdesk`;
+
+  let uri = process.env.MONGO_URI || `mongodb://localhost:5000/helpdesk`;
   console.log(`📡 MongoDB: Attempting connection...`);
   mongoose.connect(uri, {
     serverSelectionTimeoutMS: 10000, // Timeout after 10

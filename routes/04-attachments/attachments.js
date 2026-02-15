@@ -7,8 +7,8 @@ router.post("/", async (req, res) => {
     try {
         // req.body.content should be a base64 string or buffer from axios
         const attachmentData = req.body;
-        if (attachmentData.content && typeof attachmentData.content === 'string') {
-            attachmentData.content = Buffer.from(attachmentData.content, 'base64');
+        if (attachmentData.content && typeof attachmentData.content === "string") {
+            attachmentData.content = Buffer.from(attachmentData.content, "base64");
         }
         const attachment = new Attachment(attachmentData);
         await attachment.save();
@@ -33,27 +33,7 @@ router.get("/ticket/:id", async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
-// Download attachment by filename (Returns binary)
-router.get("/filename/:filename/download", async (req, res) => {
-    try {
-        const attachment = await Attachment.findOne({ filename: req.params.filename });
-        if (!attachment) return res.status(404).json({ error: "Not found" });
-
-        res.set({
-            "Content-Type": attachment.mime_type,
-            "Content-Disposition": `attachment; filename="${attachment.original_name}"`,
-            "Content-Length": attachment.content.length
-        });
-        res.send(attachment.content);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-=======
->>>>>>> 111453fecb43ccc8fd926c7444d5545796875210
-// Download attachment (Returns binary)
+// Download attachment (Returns binary by ID)
 router.get("/:id/download", async (req, res) => {
     try {
         const attachment = await Attachment.findById(req.params.id);
@@ -62,7 +42,7 @@ router.get("/:id/download", async (req, res) => {
         res.set({
             "Content-Type": attachment.mime_type,
             "Content-Disposition": `attachment; filename="${attachment.original_name}"`,
-            "Content-Length": attachment.content.length
+            "Content-Length": attachment.content.length,
         });
         res.send(attachment.content);
     } catch (err) {
